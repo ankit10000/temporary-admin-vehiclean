@@ -81,6 +81,10 @@ export const adminAPI = {
   assignPartner: (id: string, partnerId: string) => api.patch(`/admin/bookings/${id}/assign`, { partnerId }),
   cancelBooking: (id: string, reason: string) => api.patch(`/admin/bookings/${id}/cancel`, { reason }),
 
+  // Refunds
+  getRefunds: (params?: Record<string, string>) => api.get('/admin/refunds', { params }),
+  processRefund: (id: string, data: any) => api.patch(`/admin/refunds/${id}`, data),
+
   // Payments
   getPayments: (params?: Record<string, string>) => api.get('/admin/payments', { params }),
 
