@@ -207,6 +207,47 @@ export default function PartnerDetailPage() {
             </div>
           </div>
 
+          {/* Bank & UPI Details */}
+          <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-gray-100">
+            <h3 className="text-lg font-semibold mb-4">Bank & UPI Details</h3>
+            {partner.bankDetails?.accountNumber || partner.upiId ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {partner.upiId && (
+                  <div className="bg-green-50 rounded-lg p-4 border border-green-100">
+                    <p className="text-xs text-gray-500 mb-1">UPI ID</p>
+                    <p className="text-sm font-semibold text-gray-800">{partner.upiId}</p>
+                  </div>
+                )}
+                {partner.bankDetails?.accountHolder && (
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-xs text-gray-500 mb-1">Account Holder</p>
+                    <p className="text-sm font-semibold text-gray-800">{partner.bankDetails.accountHolder}</p>
+                  </div>
+                )}
+                {partner.bankDetails?.accountNumber && (
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-xs text-gray-500 mb-1">Account Number</p>
+                    <p className="text-sm font-semibold text-gray-800">{partner.bankDetails.accountNumber}</p>
+                  </div>
+                )}
+                {partner.bankDetails?.ifscCode && (
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-xs text-gray-500 mb-1">IFSC Code</p>
+                    <p className="text-sm font-semibold text-gray-800">{partner.bankDetails.ifscCode}</p>
+                  </div>
+                )}
+                {partner.bankDetails?.bankName && (
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-xs text-gray-500 mb-1">Bank Name</p>
+                    <p className="text-sm font-semibold text-gray-800">{partner.bankDetails.bankName}</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-400">Partner has not added bank or UPI details yet.</p>
+            )}
+          </div>
+
           {/* KYC Documents - Full Width */}
           <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-gray-100">
             <div className="flex items-center justify-between mb-6">

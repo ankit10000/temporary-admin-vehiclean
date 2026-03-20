@@ -5,6 +5,7 @@ import DataTable from '@/components/DataTable';
 import StatusBadge from '@/components/StatusBadge';
 import Pagination from '@/components/Pagination';
 import { adminAPI } from '@/lib/api';
+import Modal from '@/components/Modal';
 import { Search, Download } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { exportToExcel, flattenForExport } from '@/lib/export';
@@ -15,6 +16,7 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -53,6 +55,13 @@ export default function UsersPage() {
       key: 'createdAt',
       label: 'Joined',
       render: (val: string) => new Date(val).toLocaleDateString('en-IN'),
+    },
+    {
+      key: 'upiId',
+      label: 'Payment Info',
+      render: (_: any, row: any) => (row.upiId || row.bankDetails?.accountNumber) ? (
+        <button onClick={() => setSelectedUser(row)} className="text-xs px-3 py-1 bg-purple-100 text-purple-700 rounded-lg font-medium">View</button>
+      ) : <span className="text-xs text-gray-400">Not added</span>,
     },
     {
       key: '_id',
@@ -102,6 +111,44 @@ export default function UsersPage() {
       </div>
       <DataTable columns={columns} data={users} loading={loading} />
       <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+
+      <Modal isOpen={!!selectedUser} onClose={() => setSelectedUser(null)} title={`Bank & UPI - ${selectedUser?.name || 'User'}`}>
+        <div className="space-y-3">
+          {selectedUser?.upiId && (
+            <div className="bg-green-50 rounded-lg p-4 border border-green-100">
+              <p className="text-xs text-gray-500 mb-1">UPI ID</p>
+              <p className="text-sm font-semibold text-gray-800">{selectedUser.upiId}</p>
+            </div>
+          )}
+          {selectedUser?.bankDetails?.accountHolder && (
+            <div className="flex justify-between bg-gray-50 rounded-lg p-3">
+              <span className="text-sm text-gray-500">Account Holder</span>
+              <span className="text-sm font-medium text-gray-800">{selectedUser.bankDetails.accountHolder}</span>
+            </div>
+          )}
+          {selectedUser?.bankDetails?.accountNumber && (
+            <div className="flex justify-between bg-gray-50 rounded-lg p-3">
+              <span className="text-sm text-gray-500">Account No.</span>
+              <span className="text-sm font-medium text-gray-800">{selectedUser.bankDetails.accountNumber}</span>
+            </div>
+          )}
+          {selectedUser?.bankDetails?.ifscCode && (
+            <div className="flex justify-between bg-gray-50 rounded-lg p-3">
+              <span className="text-sm text-gray-500">IFSC Code</span>
+              <span className="text-sm font-medium text-gray-800">{selectedUser.bankDetails.ifscCode}</span>
+            </div>
+          )}
+          {selectedUser?.bankDetails?.bankName && (
+            <div className="flex justify-between bg-gray-50 rounded-lg p-3">
+              <span className="text-sm text-gray-500">Bank Name</span>
+              <span className="text-sm font-medium text-gray-800">{selectedUser.bankDetails.bankName}</span>
+            </div>
+          )}
+          {!selectedUser?.upiId && !selectedUser?.bankDetails?.accountNumber && (
+            <p className="text-sm text-gray-400 text-center py-4">No payment details added yet.</p>
+          )}
+        </div>
+      </Modal>
     </AdminLayout>
   );
 }
