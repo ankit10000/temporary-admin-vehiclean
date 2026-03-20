@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, Users, UserCog, Wrench, ShoppingBag, Tag, Image, Calendar,
-  CreditCard, ArrowDownToLine, Bell, Clock, Settings, LogOut, Star,
+  CreditCard, ArrowDownToLine, Bell, Clock, Settings, LogOut, Star, RotateCcw,
+  HelpCircle, MessageSquare,
 } from 'lucide-react';
 
 const menuItems = [
@@ -16,9 +17,12 @@ const menuItems = [
   { href: '/banners', label: 'Banners', icon: Image },
   { href: '/bookings', label: 'Bookings', icon: Calendar },
   { href: '/payments', label: 'Payments', icon: CreditCard },
+  { href: '/refunds', label: 'Refunds', icon: RotateCcw },
   { href: '/withdrawals', label: 'Withdrawals', icon: ArrowDownToLine },
   { href: '/reviews', label: 'Reviews', icon: Star },
   { href: '/notifications', label: 'Notifications', icon: Bell },
+  { href: '/faqs', label: 'FAQs', icon: HelpCircle },
+  { href: '/support', label: 'Support Tickets', icon: MessageSquare },
   { href: '/slots', label: 'Time Slots', icon: Clock },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];

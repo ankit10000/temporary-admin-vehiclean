@@ -73,6 +73,46 @@ export default function WithdrawalsPage() {
         <div className="space-y-4">
           <p className="text-sm text-gray-600">Amount: <span className="font-bold">₹{selected?.amount}</span></p>
           <p className="text-sm text-gray-600">Partner: <span className="font-medium">{selected?.partnerId?.name}</span></p>
+
+          {/* Partner Payment Details */}
+          {(selected?.partnerId?.upiId || selected?.partnerId?.bankDetails?.accountNumber) ? (
+            <div className="bg-gray-50 rounded-lg p-4 space-y-2 border border-gray-200">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Payment Details</p>
+              {selected?.partnerId?.upiId && (
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-500">UPI ID</span>
+                  <span className="text-sm font-semibold text-gray-800">{selected.partnerId.upiId}</span>
+                </div>
+              )}
+              {selected?.partnerId?.bankDetails?.accountHolder && (
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-500">Account Holder</span>
+                  <span className="text-sm font-medium text-gray-800">{selected.partnerId.bankDetails.accountHolder}</span>
+                </div>
+              )}
+              {selected?.partnerId?.bankDetails?.accountNumber && (
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-500">Account No.</span>
+                  <span className="text-sm font-medium text-gray-800">{selected.partnerId.bankDetails.accountNumber}</span>
+                </div>
+              )}
+              {selected?.partnerId?.bankDetails?.ifscCode && (
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-500">IFSC</span>
+                  <span className="text-sm font-medium text-gray-800">{selected.partnerId.bankDetails.ifscCode}</span>
+                </div>
+              )}
+              {selected?.partnerId?.bankDetails?.bankName && (
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-500">Bank</span>
+                  <span className="text-sm font-medium text-gray-800">{selected.partnerId.bankDetails.bankName}</span>
+                </div>
+              )}
+            </div>
+          ) : (
+            <p className="text-xs text-orange-600 bg-orange-50 rounded-lg p-3 border border-orange-100">Partner has not added bank/UPI details yet.</p>
+          )}
+
           <input type="text" placeholder="Transaction ID" value={transactionId} onChange={(e) => setTransactionId(e.target.value)} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm" />
           <button onClick={() => handleAction(selected?._id, 'paid')} className="w-full py-2.5 bg-green-600 text-white rounded-lg text-sm font-medium">Mark as Paid</button>
         </div>

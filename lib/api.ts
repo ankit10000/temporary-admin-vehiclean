@@ -81,6 +81,10 @@ export const adminAPI = {
   assignPartner: (id: string, partnerId: string) => api.patch(`/admin/bookings/${id}/assign`, { partnerId }),
   cancelBooking: (id: string, reason: string) => api.patch(`/admin/bookings/${id}/cancel`, { reason }),
 
+  // Refunds
+  getRefunds: (params?: Record<string, string>) => api.get('/admin/refunds', { params }),
+  processRefund: (id: string, data: any) => api.patch(`/admin/refunds/${id}`, data),
+
   // Payments
   getPayments: (params?: Record<string, string>) => api.get('/admin/payments', { params }),
 
@@ -103,4 +107,14 @@ export const adminAPI = {
   // Settings
   getSettings: () => api.get('/admin/settings'),
   updateSettings: (data: any) => api.patch('/admin/settings', data),
+
+  // FAQs
+  getFAQs: () => api.get('/support/admin/faqs'),
+  createFAQ: (data: any) => api.post('/support/admin/faqs', data),
+  updateFAQ: (id: string, data: any) => api.put(`/support/admin/faqs/${id}`, data),
+  deleteFAQ: (id: string) => api.delete(`/support/admin/faqs/${id}`),
+
+  // Support Tickets
+  getTickets: (params?: Record<string, string>) => api.get('/support/admin/tickets', { params }),
+  replyTicket: (id: string, data: any) => api.patch(`/support/admin/tickets/${id}`, data),
 };
